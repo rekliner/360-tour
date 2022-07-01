@@ -20,7 +20,7 @@ function RoomPage() {
   return (
     <Layout>
       <PlayerMain
-        roomId={roomId}
+        roomId="testRoom"
         roomName={roomName}
         userName={userName}
         isHost={true}

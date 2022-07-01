@@ -18,14 +18,14 @@ export default function useRoomEvents(timeLimit = 15, limit) {
   
   const recentEvents = getLatestEvents(roomEvents, timeLimit)
 
-  useEffect(() => {
-    const forceRefresh = setInterval(() => {
-      setLastUpdate(+new Date())
-    }, 5000)
-    return () => {
-      clearInterval(forceRefresh)
-    }
-  }, [])
+  // useEffect(() => {
+  //   const forceRefresh = setInterval(() => {
+  //     setLastUpdate(+new Date())
+  //   }, 5000)
+  //   return () => {
+  //     clearInterval(forceRefresh)
+  //   }
+  // }, [])
 
   return [recentEvents, roomEvents]
 

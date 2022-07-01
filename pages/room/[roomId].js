@@ -61,14 +61,14 @@ export default function RoomPage() {
       )}
       { willingToConnect && (
         <PlayerMain
-          roomId={roomId}
+          roomId="testRoom"
           userName={userName}
           isHost={false}
         />
       )}
       <style jsx>{`
         .spacing > * {
-          margin-top: 10px;
+          margin-top: 0px;
         }
         .error {
           font-size: 12px;

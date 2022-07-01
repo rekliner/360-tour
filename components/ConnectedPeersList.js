@@ -71,7 +71,7 @@ export default function ConnectedPeersList({ shareLink }) {
           }
         `}</style>
       </div>
-      { shareLink && (
+      {/* { shareLink && (
         <Container>
           <p>Invite people to the room with this link</p>
           <div style={{fontSize: 36, display: 'flex', justifyContent: 'center'}}>
@@ -82,7 +82,7 @@ export default function ConnectedPeersList({ shareLink }) {
             </CopyToClipboard>
           </div>
         </Container>
-      )}
+      )} */}
     </>
   )
 }
