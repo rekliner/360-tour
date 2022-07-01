@@ -1,0 +1,47 @@
+[
+  {
+    "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/front_still.mp4",
+    "loop": true
+  },
+  {
+    "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/stadium_still.mp4",
+    "loop": true
+  },
+  {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/0/03/20180407_132600_Ess-Na-Crub_Waterfall.webm",
+    "loop": "true",
+    "buttons": [
+      {
+        "text": "a tree",
+        "position": [5, 5, 5],
+        "content": { "title": "Hey look, a tree", "content": "Lorem ipsum blah blah blah blah.  yes its just a tree" }
+      },
+      {
+        "text": "waterfall",
+        "position": [5, 0, 0],
+        "content": { "title": "A waterfall", "content": "Such a nice waterfall i could stay here all day" }
+      }
+    ]
+  },
+  {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/0/01/Esino_Lario_360.webm",
+    "loop": true
+  },
+  {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/a/a3/2021_06_12_PARA_360_Tolmin_SokoleONE_2_-_UP_Kangri.webm",
+    "loop": false
+  },
+  {
+    "src":
+      "https://upload.wikimedia.org/wikipedia/commons/a/a6/N%C3%A3o_veja_este_video_360_se_tiver_vertigens%21_Madeira_-_Cabo_Gir%C3%A3o.webm",
+    "loop": false
+  },
+  {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/3/33/2021_06_12_PARA_360_Tolmin_SokoleONE_-_UP_Kangri.webm",
+    "loop": false
+  },
+  {
+    "src": "https://diamhost-assets.s3.amazonaws.com/Diamond/2021_06_12_PARA_360_Tolmin_SokoleONE_-_UP_Kangri.webm.720p.webm",
+    "loop": false
+  }
+]
