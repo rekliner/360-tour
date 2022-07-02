@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { Suspense, useContext, useEffect, useState } from 'react'
 import { FiMic, FiMicOff, FiAlertTriangle } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
@@ -48,7 +48,7 @@ function Main ({ user }) {
   const [recentEvents, roomEvents] = useRoomEvents();
 
   if (!user.name) {
-    router.push('/host')
+    router.push(isHost ? '/host' : '/')
   }
 
   const {
@@ -96,9 +96,14 @@ function Main ({ user }) {
       console.log("sc diff", latestSceneChange, sceneIndex)
       setSceneIndex(latestSceneChange);
     }
+    const latestPlayState = roomEvents.sort((a,b) => a.date < b.date).find((event) => event.eventName === 'isPlaying')?.value ?? 1;
+    if (latestPlayState !== isPlaying) {
+      console.log("play diff", latestPlayState, isPlaying)
+      setIsPlaying(latestPlayState);
+    }
   }, [roomEvents])
   
-  const shareLink = typeof window === 'undefined' ? '' : `${window.location.protocol || ''}//${window.location.host || ''}/room/${roomId}`
+  //const shareLink = typeof window === 'undefined' ? '' : `${window.location.protocol || ''}//${window.location.host || ''}/room/${roomId}`
 
   async function onLeave() {
     if (isHost) {
@@ -131,9 +136,7 @@ function Main ({ user }) {
           <FiAlertTriangle size={62} />
           <Heading size={2}>Error</Heading>
           <p>Could not connect to room</p>
-          <Link href="/host">
-            <Button as="a">Go Back</Button>
-          </Link>
+            <Button onClick={() => {router.push(isHost ? '/host' : '/')}}>Go Back</Button>
         </div>
         <style jsx>{`
           div {
@@ -174,6 +177,17 @@ function Main ({ user }) {
 
   }
 
+  const handleTogglePlay = () => {
+    handlePeerMessage(
+      {
+        date: +new Date(), 
+        eventName: 'isPlaying', 
+        value: !isPlaying
+      }
+    ); 
+    setIsPlaying(!isPlaying)
+  }
+
   const nextSceneIndex = () => {
     return scenes.length - 1 === sceneIndex ? 0 : sceneIndex + 1
   }
@@ -183,7 +197,7 @@ function Main ({ user }) {
   
   return (
     <>
-      <Scene sceneIndex={sceneIndex} setPlaying={setIsPlaying} isPlaying={isPlaying} scenes={scenes} onSceneChange={() => {console.log('scenechangefromscene')}} />
+      <Scene sceneIndex={sceneIndex} setIsPlaying={setIsPlaying} isPlaying={isPlaying} scenes={scenes} onSceneChange={() => {console.log('scenechangefromscene')}} />
       <div className="panel">
         <Container>
           <Heading>
@@ -191,7 +205,7 @@ function Main ({ user }) {
           </Heading>
         </Container>
         <StreamPlayer />
-        <ConnectedPeersList shareLink={isHost ? shareLink : null} />
+        <ConnectedPeersList shareLink={ null} />
         <ActionGroup>
           <Button outline contrast onClick={onLeave}>Leave</Button>
           { (isHost || connRole === 'speaker') && (
@@ -201,7 +215,7 @@ function Main ({ user }) {
             </Button>
           )}
         {isHost && <Button style={{marginLeft:10}} small outline contrast onClick={() => {handleSceneChange()}}>Next Scene</Button>}
-        {isHost && <Button style={{marginLeft:10}} small outline contrast onClick={() => {handlePeerMessage({date: +new Date(), eventName: 'isPlaying', value: !isPlaying}) ; setIsPlaying(!isPlaying)}}>{isPlaying ? "Pause" : "Play" }</Button>}
+        {isHost && <Button style={{marginLeft:10}} small outline contrast onClick={() => {handleTogglePlay()}}>{isPlaying ? "Pause" : "Play" }</Button>}
           {/* {!isHost && <Button style={{marginLeft:10}} small outline contrast onClick={() => handleReaction('🙋‍♀️')}>🙋‍♀️</Button>}
           {!isHost && <Button style={{marginLeft:10}} small outline contrast onClick={() => handleReaction('👍')}>👍</Button>}
           {!isHost && <Button style={{marginLeft:10}} small outline contrast onClick={() => handleReaction('👎')}>👎</Button>} */}

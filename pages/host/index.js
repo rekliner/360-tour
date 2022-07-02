@@ -1,3 +1,4 @@
+import React from 'react'
 import { useEffect, useState, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import uuid from 'uuid-random'
@@ -10,7 +11,7 @@ import Layout from '../../components/Layout'
 import Button from '../../components/Button'
 import Input from '../../components/Input'
 import Heading from '../../components/Heading'
-import RoomList from '../../components/RoomList'
+//import RoomList from '../../components/RoomList'
 
 export default function Index () {
   const router = useRouter()
@@ -83,6 +84,7 @@ export default function Index () {
   }
 
   return (
+    <React.StrictMode>
     <Layout>
       <div style={{padding: 20}}>
         <div className="spacing">
@@ -104,15 +106,6 @@ export default function Index () {
         <div style={{marginTop: 20}}>
           <Button outline={micAccess !== 'granted'} disabled={micAccess !== 'granted'} big fullWidth onClick={createRoom}>Host a Tour</Button>
         </div>
-        { config.firebase.enabled && (
-          <div className="spacing" style={{marginTop: 30}}>
-            <Heading size={2}>Latest Rooms</Heading>
-            {exploreRooms.length === 0 && (
-              <div>No rooms available</div>
-            )}
-            <RoomList rooms={exploreRooms} />
-          </div>
-        )}
       </div>
       <style jsx>{`
             .spacing > * {
@@ -125,5 +118,6 @@ export default function Index () {
             }
           `}</style>
     </Layout>
+    </React.StrictMode>
   )
 }

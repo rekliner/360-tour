@@ -1,15 +1,78 @@
 [
   {
-    "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/front_still.mp4",
+    "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/01_front_still.mp4",
+    "loop": true,
+    "buttons": [
+      {
+        "text": "Main Entrance",
+        "position": [5,5,-5],
+        "content": { "title": "Main Entrance", "content": "The main thoroughfare into the college.  Kind of understated, don't you think?" }
+      },
+      {
+        "text": "sign",
+        "position": [5,5,0],
+        "content": { "title": "Main Entrance", "content": "The main thoroughfare into the college.  Kind of understated, don't you think?" }
+      }
+    ]
+  },
+  {
+    "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/02_street_to_statue.mp4",
+    "loop": false
+  },
+  {
+    "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/03_statue_still.mp4",
+    "loop": true,
+    "buttons": [
+      {
+        "text": "William Rice",
+        "position": [5, 0, 0],
+        "content": { "title": "Statue of William Rice", "content": "Opened in 1912 after the murder of its namesake William Marsh Rice, Rice is a research university with an undergraduate focus. Its emphasis on education is demonstrated by a small student body and 6:1 student-faculty ratio. Rice is noted for its applied science programs in the fields of artificial heart research, structural chemical analysis, signal processing, space science, and nanotechnology. In 2010, it was ranked first in the world in materials science research. " }
+      }
+    ]
+  },
+  {
+    "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/04_statue_to_valhalla.mp4",
+    "loop": false
+  },
+  {
+    "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/05_valhalla_still.mp4",
     "loop": true
   },
   {
-    "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/stadium_still.mp4",
+    "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/06_valhalla_to_union.mp4",
+    "loop": false
+  },
+  {
+    "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/07_union_still.mp4",
+    "loop": true
+  },
+  {
+    "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/08_union_to_fountain.mp4",
+    "loop": false
+  },
+  {
+    "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/09_fountain_still.mp4",
+    "loop": true
+  },
+  {
+    "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/10_fountain_to_skyview.mp4",
+    "loop": false
+  },
+  {
+    "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/11_skyview_still.mp4",
+    "loop": true
+  },
+  {
+    "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/12_skyview_to_stadium.mp4",
+    "loop": false
+  },
+  {
+    "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/13_stadium_still.mp4",
     "loop": true
   },
   {
     "src": "https://upload.wikimedia.org/wikipedia/commons/0/03/20180407_132600_Ess-Na-Crub_Waterfall.webm",
-    "loop": "true",
+    "loop": true,
     "buttons": [
       {
         "text": "a tree",

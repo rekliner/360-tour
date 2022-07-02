@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
+import React from 'react'
 
 import Layout from '../../components/Layout'
 
@@ -18,6 +19,7 @@ function RoomPage() {
   } = router.query
 
   return (
+    <React.StrictMode>
     <Layout>
       <PlayerMain
         roomId="testRoom"
@@ -26,6 +28,7 @@ function RoomPage() {
         isHost={true}
       />
     </Layout>
+    </React.StrictMode>
   )
 }
 

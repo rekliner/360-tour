@@ -1,7 +1,7 @@
 {
-  "name": "ptwo-house",
-  "version": "0.1.0",
-  "description": "Full power of WebRTC to create voice rooms to have a conversations, interviews and discussions",
+  "name": "360-tour",
+  "version": "0.1.1",
+  "description": "360 video tours with audio conferencing",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,7 +9,7 @@
     "build": "next build",
     "start": "next start"
   },
-  "author": "Sergio Behrends <sergio@behrends.com.ar>",
+  "author": "Chris Kline <contact@chriskline.com and Sergio Behrends <sergio@behrends.com.ar>",
   "license": "MIT",
   "dependencies": {
     "@react-three/drei": "^8.0.0",

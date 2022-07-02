@@ -23,15 +23,16 @@ export default function usePeer(config = {}) {
     const peer = peerInstance ? peerInstance : new Peer(paramPeerId ? paramPeerId : uuid())
 
     peer.on('open', () => {
-      console.log('usePeer::Connection Open')
+      console.log('usePeer::Connection Open',peer)
       setPeerInstance(peer)
       setPeerId(peer.id)
       setPeerStatus('open')
       onConnectionOpen?.(peer)
+      console.log("peer",peer)
     })
 
     peer.on('disconnected', () => {
-      console.log('usePeer::Peer desconnected')
+      console.log('usePeer::Peer desconnected',peer)
       setPeerStatus('disconnected')
       destroyPeerInstance()
     })
