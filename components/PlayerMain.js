@@ -1,4 +1,4 @@
-import { Suspense, useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { FiMic, FiMicOff, FiAlertTriangle } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 import Link from 'next/link'

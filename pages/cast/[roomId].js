@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
-import React from 'react'
+import {StrictMode,Suspense} from 'react'
 
 import Layout from '../../components/Layout'
 
@@ -19,16 +19,18 @@ function RoomPage() {
   } = router.query
 
   return (
-    <React.StrictMode>
-    <Layout>
-      <PlayerMain
-        roomId="testRoom"
-        roomName={roomName}
-        userName={userName}
-        isHost={true}
-      />
-    </Layout>
-    </React.StrictMode>
+    <StrictMode>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Layout>
+          <PlayerMain
+            roomId="testRoom"
+            roomName={roomName}
+            userName={userName}
+            isHost={true}
+          />
+        </Layout>
+      </Suspense>
+    </StrictMode>
   )
 }
 

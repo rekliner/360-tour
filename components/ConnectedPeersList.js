@@ -1,4 +1,4 @@
-import { useContext, useMemo, Suspense } from 'react'
+import { useContext, useMemo } from 'react'
 
 import { RiWhatsappLine, RiTelegramLine, RiLinksFill } from 'react-icons/ri'
 import { FiX, FiPlus } from 'react-icons/fi'
@@ -44,7 +44,6 @@ export default function ConnectedPeersList({ shareLink }) {
 
   return (
     <>
-    <Suspense>
       <Container>
         <Heading size={2}>
           Listeners ({listenersPeers.length})
@@ -84,7 +83,6 @@ export default function ConnectedPeersList({ shareLink }) {
           </div>
         </Container>
       )} */}
-    </Suspense>
     </>
   )
 }

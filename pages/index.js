@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import {Suspense, useState, useRef } from 'react'
 //import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
 
@@ -41,6 +41,9 @@ export default function RoomPage() {
   }
 
   return (
+    <StrictMode>
+    <Suspense fallback={<div>Loading...</div>}>
+
     <Layout>
       { !willingToConnect && (
         <div style={{padding: 20}}>
@@ -77,5 +80,8 @@ export default function RoomPage() {
         }
       `}</style>
     </Layout>
+    </Suspense>
+    </StrictMode>
+
   )
 }
