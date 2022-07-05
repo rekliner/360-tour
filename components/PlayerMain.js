@@ -165,15 +165,42 @@ function Main ({ user }) {
     });
   }
 
-  const handleSceneChange = () => {
-    handlePeerMessage(
-      {
-        date: +new Date(), 
-        eventName: 'sceneChange', 
-        value: nextSceneIndex(sceneIndex)
-      }
-    ); 
-    setSceneIndex(nextSceneIndex(sceneIndex));
+  const handleSceneChange = (index = "next") => {
+
+    if (index == "next") {
+      handlePeerMessage(
+        {
+          date: +new Date(), 
+          eventName: 'sceneChange', 
+          value: nextSceneIndex(sceneIndex)
+        }
+      ); 
+      setSceneIndex(nextSceneIndex(sceneIndex));
+
+    } else if (index == "previous") {
+      handlePeerMessage(
+        {
+          date: +new Date(), 
+          eventName: 'sceneChange', 
+          value: previousSceneIndex(sceneIndex)
+        }
+      ); 
+      setSceneIndex(previousSceneIndex(sceneIndex));
+
+    } else if (! isNaN(index)) {
+      handlePeerMessage(
+        {
+          date: +new Date(), 
+          eventName: 'sceneChange', 
+          value: nextSceneIndex(index)
+        }
+      ); 
+      setSceneIndex(nextSceneIndex(sceneIndex));
+
+    } else if (index == "play") {
+      handleTogglePlay()
+    }
+
 
   }
 
@@ -197,7 +224,7 @@ function Main ({ user }) {
   
   return (
     <>
-      <Scene sceneIndex={sceneIndex} setIsPlaying={setIsPlaying} isPlaying={isPlaying} scenes={scenes} onSceneChange={() => {console.log('scenechangefromscene')}} />
+      <Scene isHost={isHost} sceneIndex={sceneIndex} isPlaying={isPlaying} scenes={scenes} handleSceneChange={handleSceneChange} />
       <div className="panel">
         <Container>
           <Heading>

@@ -5,13 +5,13 @@
     "buttons": [
       {
         "text": "Main Entrance",
-        "position": [5,5,-5],
+        "position": [-5,4,-5],
         "content": { "title": "Main Entrance", "content": "The main thoroughfare into the college.  Kind of understated, don't you think?" }
       },
       {
         "text": "sign",
-        "position": [5,5,0],
-        "content": { "title": "Main Entrance", "content": "The main thoroughfare into the college.  Kind of understated, don't you think?" }
+        "position": [5,4,-5],
+        "content": { "title": "The sign", "content": "This lets people know which college they are at.  Rice students are smart but often need guiance." }
       }
     ]
   },
@@ -25,7 +25,7 @@
     "buttons": [
       {
         "text": "William Rice",
-        "position": [5, 0, 0],
+        "position": [5, 1, 0],
         "content": { "title": "Statue of William Rice", "content": "Opened in 1912 after the murder of its namesake William Marsh Rice, Rice is a research university with an undergraduate focus. Its emphasis on education is demonstrated by a small student body and 6:1 student-faculty ratio. Rice is noted for its applied science programs in the fields of artificial heart research, structural chemical analysis, signal processing, space science, and nanotechnology. In 2010, it was ranked first in the world in materials science research. " }
       }
     ]

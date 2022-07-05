@@ -1,4 +1,4 @@
-import {Suspense, useState, useRef } from 'react'
+import {Suspense, StrictMode, useState, useRef } from 'react'
 //import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
 
@@ -41,8 +41,6 @@ export default function RoomPage() {
   }
 
   return (
-    <StrictMode>
-    <Suspense fallback={<div>Loading...</div>}>
 
     <Layout>
       { !willingToConnect && (
@@ -63,11 +61,16 @@ export default function RoomPage() {
         </div>
       )}
       { willingToConnect && (
+    <StrictMode>
+    <Suspense fallback={<div>Loading...</div>}>
         <PlayerMain
           roomId="testRoom"
           userName={userName}
           isHost={false}
         />
+        </Suspense>
+        </StrictMode>
+    
       )}
       <style jsx>{`
         .spacing > * {
@@ -80,8 +83,6 @@ export default function RoomPage() {
         }
       `}</style>
     </Layout>
-    </Suspense>
-    </StrictMode>
 
   )
 }

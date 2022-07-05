@@ -1,110 +1,170 @@
 import * as THREE from 'three'
 import { Suspense, useEffect, useState, useRef, useCallback, useMemo, useLoader  } from 'react'
-import { extend } from '@react-three/fiber'
+import { extend, useFrame, useThree } from '@react-three/fiber'
 import { VRCanvas, DefaultXRControllers, Hands, Interactive, useXR } from '@react-three/xr'
 import { Html, Preload, OrbitControls, Text, useGLTF } from '@react-three/drei'
+import _ from 'lodash'
 //import { Popconfirm } from 'antd'
 import MovementController from './MovementController'
-// import ThreeMeshUI from 'three-mesh-ui'
+import ThreeMeshUI from 'three-mesh-ui'
 // import { useControls } from 'leva'
-//import  Button  from './Button'
+import  {VRButton}  from './VRButton'
+//import { VRTextPanel } from './VRTextPanels'
 //import useRoomEvents from '../hooks/useRoomEvents'
 
-function SceneObjects({isHost,isPlaying,video,currentScene,setIsPlaying}) {
+function SceneObjects({isHost,isPlaying,video,currentScene,scenes, handleSceneChange,sceneIndex}) {
+  const { gl, camera } = useThree();
+  const cam = gl.xr.isPresenting ? gl.xr.getCamera(camera) : camera;
   const [showPopup, setShowPopup] = useState(false)
-  const togglePlay = () => {
-    if(isPlaying) {
-      setIsPlaying(false);
-      video.pause();
-    } else {  
-      setIsPlaying(true);
-      video.play()
-    }
-  }
   useGLTF.preload("/trolley.glb");
-  const Trolley = () => {
-
-    
-    const group = useRef();
-    const { nodes, materials } = useGLTF('/trolley.glb');
-    return (
-      <group ref={group} dispose={null}>
-        <group rotation={[0, 0 , 0]} scale={[1.0,1.0,2.0]} position={[0,1.75,0]} >
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes.defaultMaterial.geometry}
-              material={materials.initialShadingGroup}
-            />
-        </group>
-      </group>
-    )};
-
-  
+  //const { nodes, materials } = useGLTF('/trolley.glb');
   return (
     <>
       <ambientLight />
       <primitive object={new THREE.AxesHelper(10)} />
       <pointLight position={[10, 10, 10]} />
-      <Trolley  /> 
-      <Interactive
+      <Suspense fallback={null} r3f>
+        <Trolley  /> 
+       <Interactive
         onHover={() => {}}
         onSelect={() => {
-          setShowPopup(false)
+          //setShowPopup(false)
         }}>
 
-        <mesh scale={-1} rotation={[0,0,Math.PI]}
+        <mesh scale={-1} rotation={[0,Math.PI/2,Math.PI]}
           onClick={() => {
             console.log('clear popup')
-            setShowPopup(false)
+            //setShowPopup(false)
           }}>
           <sphereBufferGeometry args={[500, 60, 40]} phiStart={3/2 * Math.PI  - (Math.PI/200) } />
           <meshBasicMaterial side={THREE.BackSide}  toneMapped={false} wrapS={THREE.RepeatWrapping} offset={[180 / ( 2 * Math.PI ),0,180 / ( 2 * Math.PI )]}  >
-            {currentScene && <videoTexture attach="map"   args={[video]} encoding={THREE.sRGBEncoding}  /> }
+         <videoTexture attach="map"   args={[video]} encoding={THREE.sRGBEncoding}  /> 
           </meshBasicMaterial>
         </mesh>
+        </Interactive>
+        </Suspense>
+        {showPopup && 
+<>
 
-        {showPopup 
-        
-        }
-      </Interactive>
-      
-     {currentScene?.buttons?.map((button) => (
-        
-        <BubbleButton
+        <group
+          position={[0,2,-4]}
+          onClick={() =>  {console.log("hiding");setShowPopup(null)}}
+        >
+          
+          <mesh>
+            <planeBufferGeometry args={[5, 7]} />
+            <meshLambertMaterial attach="material" color="#666" />
+          </mesh>
+          <Text
+            color="#FFF"
+            width={10}
+            scale={[
+              5 * (showPopup.title.length / 20),
+              5 * (showPopup.title.length / 20),
+              1
+            ]}
+            position={[0, 7 / 2 - showPopup.title.length / 20, 0.1]}
+          >
+            {showPopup.title}
+          </Text>
+          <Text
+            textAlign="justify"
+            maxWidth={1}
+            fontSize={0.05}
+            scale={[
+              5 * (showPopup.title.length / 20),
+              5 * (showPopup.title.length / 20),
+              1
+            ]}
+            color="#fff"
+            position={[0, 0, 1 / 16]}
+          >
+            {showPopup.content}
+          </Text>
+        </group>
+</>}
+       {/*  <VRTextPanel follow={false} position={[0,1,-5]} title="test title" content="testing all the content right now and you have ti stop" onClick={setShowPopup(false)} />
+        {
+        showPopup?.title && 
+        (<>
+
+        <BubbleButton name="test" position={[0,2,-5]} />
+          <VRTextPanel title={showPopup.title} content={showPopup.content} onClick={setShowPopup(false)} />
+          </>  )
+          } */}
+     {scenes[sceneIndex]?.buttons?.map((button) => (
+        <VRButton
           key={button.text + 'Bubble'}
-          name={button.text}
+          label={button.text}
           position={button.position}
           onClick={() => {
+            console.log("showing popup");
             setShowPopup({ title: button.content.title, content: button.content.content, position: button.position })
           }}
         />
-      ))}
-      
+      ))} 
+
+      {isHost && <>
+        <VRButton
+          key="PreviousBubble"
+          label="Previous"
+          position={[-2,1,-5]}
+          onClick={_.debounce(() => {
+            handleSceneChange("previous");
+          },{leading: true, trailing: false, maxWait: 10})}
+        />        <VRButton
+        key="PauseBubble"
+        label={isPlaying ? "Pause" : "Play"}
+        position={[0,1,-5]}
+        onClick={_.debounce(() => {
+          if(isPlaying) {
+            video.pause();
+          } else {  
+            video.play()
+          }
+          handleSceneChange("play");
+        },{leading: true, trailing: false, maxWait: 10})}
+      />
+        <VRButton
+          key="NextBubble"
+          label="Next"
+          position={[2,1,-5]}
+          onClick={_.debounce(() => {
+            console.log("next click",sceneIndex);
+            video.removeEventListener('ended', this, false)
+            handleSceneChange("next");
+          },{leading: true, trailing: false, maxWait: 100})}
+        />
+      </>}
+                      
+
     </>
   )
 }
 
-const BubbleButton = ({ name, position, onClick }) => {
-  const [isHovered, setIsHovered] = useState(false)
-  var origin = new THREE.Vector3(0,2,0);
-  var posV = new THREE.Vector3(position[0],position[1],position[2]);
-  var q = new THREE.Quaternion(); // create one and reuse it
-  var a = new THREE.Euler();
-  q.setFromUnitVectors( origin, posV );
-  a.setFromQuaternion(q);
-  var aa = a.toArray().slice(0,3).map(x=>x*1/Math.PI);
-  console.log("button",position,name,aa);
+const Trolley = () => {
+  // useFrame = () => {
+  //   if (oob(cam.position, bounds)) {
+      
+  //   }
+  // }
+  const group = useRef();
+  const { nodes, materials } = useGLTF('/trolley.glb');
   return (
-    <Interactive  onSelect={onClick} onHover={() => setIsHovered(true)} onBlur={() => setIsHovered(false)}>
-<group position={position} rotation={aa}>
-        <Text  color="red">{name}</Text> </group>
-    </Interactive>
+   <group ref={group} dispose={null}>
+      <group rotation={[0, Math.PI/2 , 0]} scale={[1.0,1.0,2.0]} position={[0,1.5,0]} >
+          <mesh
+            geometry={nodes.defaultMaterial.geometry}
+            material={materials.initialShadingGroup}
+          />
+      </group>
+    </group>
   )
 }
 
 
-export default function Scene({sceneIndex,scenes,isPlaying, setIsPlaying, setSceneIndex,isHost}) {
+
+export default function Scene({sceneIndex,scenes,isPlaying, setIsPlaying, handleSceneChange,isHost}) {
   const [currentScene, setCurrentScene] = useState(scenes[sceneIndex])
   const [video, setVideo] = useState(null)
   const vidRef = useRef(null)
@@ -113,12 +173,14 @@ export default function Scene({sceneIndex,scenes,isPlaying, setIsPlaying, setSce
     console.log('video ended! next is', (sceneIndex + 1) % scenes.length, vidRef.current)
     vidRef.current.removeEventListener('ended', this, false)
     if (isHost) { 
-      setSceneIndex((sceneIndex + 1) % scenes.length)
+      handleSceneChange()
+      //setSceneIndex((sceneIndex + 1) % scenes.length)
     }
     setCurrentScene(scenes[(sceneIndex + 1) % scenes.length])
   }, [currentScene])
 
   useEffect(() => {
+    console.log("video")
     if (video) {
       if (isPlaying) {
         video.play()
@@ -139,6 +201,7 @@ export default function Scene({sceneIndex,scenes,isPlaying, setIsPlaying, setSce
 
 
   useEffect(() => {
+    console.log("currentScene ue")
     if (currentScene) {
       let nextVideo = document.getElementById('video' + sceneIndex)
       if (!nextVideo) {
@@ -154,7 +217,9 @@ export default function Scene({sceneIndex,scenes,isPlaying, setIsPlaying, setSce
         nextVideo.ref = vidRef
       }
       vidRef.current = nextVideo
-      nextVideo.addEventListener('ended', gotoNext)
+      //if (!isHost) {
+        nextVideo.addEventListener('ended', gotoNext)
+      //}
       setVideo(nextVideo)
     }
   }, [currentScene, gotoNext])
@@ -162,24 +227,21 @@ export default function Scene({sceneIndex,scenes,isPlaying, setIsPlaying, setSce
 
   return (
     <div className='scene'>
-      <VRCanvas frameloop="demand" camera={{  position: [0,2,0] ,rotation: [0,90,0]}}>
+      <VRCanvas frameloop="demand" camera={{  position: [0,1.75,0] }}>
         <Suspense fallback={<Text>Loading...</Text>} r3f>
           <Preload all /> 
           {currentScene &&
             <SceneObjects
-              currentScene={currentScene}
+            handleSceneChange={handleSceneChange}
               video={video}
-              gotoNext={() => {
-                console.log('click')
-                return gotoNext()
-              }}
-              gotoPrev={() => gotoPrevious()}
               isPlaying={isPlaying}
               setIsPlaying={setIsPlaying}
               scenes={scenes}
+              isHost={isHost}
+              sceneIndex={sceneIndex}
             />
           }
-        <OrbitControls target={[0,2,0]} minDistance={0} maxDistance={0.01} enableZoom={false} enablePan={false} enableDamping dampingFactor={0.2} autoRotate={false} rotateSpeed={-0.5} />
+        <OrbitControls target={[0,1.75,0]} minDistance={0} maxDistance={0.01} enableZoom={false} enablePan={false} enableDamping dampingFactor={0.2} autoRotate={false} rotateSpeed={-0.5} />
         <MovementController applyForward={false} />
         <MovementController hand="left" applyRotation={true} applyForward={false} />
         <DefaultXRControllers />

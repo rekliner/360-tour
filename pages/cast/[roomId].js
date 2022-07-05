@@ -20,7 +20,6 @@ function RoomPage() {
 
   return (
     <StrictMode>
-      <Suspense fallback={<div>Loading...</div>}>
         <Layout>
           <PlayerMain
             roomId="testRoom"
@@ -29,7 +28,6 @@ function RoomPage() {
             isHost={true}
           />
         </Layout>
-      </Suspense>
     </StrictMode>
   )
 }
