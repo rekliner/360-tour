@@ -9,6 +9,7 @@ import MovementController from './MovementController'
 import ThreeMeshUI from 'three-mesh-ui'
 // import { useControls } from 'leva'
 import  {VRButton}  from './VRButton'
+//import {CameraBounds} from './CameraBounds'
 //import { VRTextPanel } from './VRTextPanels'
 //import useRoomEvents from '../hooks/useRoomEvents'
 
@@ -168,6 +169,8 @@ export default function Scene({sceneIndex,scenes,isPlaying, setIsPlaying, handle
   const [currentScene, setCurrentScene] = useState(scenes[sceneIndex])
   const [video, setVideo] = useState(null)
   const vidRef = useRef(null)
+
+  //CameraBounds([-1,1.5,-1.5],[1,2.5,1.5]);
 
   const gotoNext = useCallback(() => {
     console.log('video ended! next is', (sceneIndex + 1) % scenes.length, vidRef.current)

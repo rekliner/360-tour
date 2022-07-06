@@ -11,7 +11,7 @@
       {
         "text": "sign",
         "position": [5,4,-5],
-        "content": { "title": "The sign", "content": "This lets people know which college they are at.  Rice students are smart but often need guiance." }
+        "content": { "title": "The Rice sign", "content": "This lets people know which college they are at.  Rice students are smart but often need guidance." }
       }
     ]
   },
@@ -25,8 +25,13 @@
     "buttons": [
       {
         "text": "William Rice",
-        "position": [5, 1, 0],
-        "content": { "title": "Statue of William Rice", "content": "Opened in 1912 after the murder of its namesake William Marsh Rice, Rice is a research university with an undergraduate focus. Its emphasis on education is demonstrated by a small student body and 6:1 student-faculty ratio. Rice is noted for its applied science programs in the fields of artificial heart research, structural chemical analysis, signal processing, space science, and nanotechnology. In 2010, it was ranked first in the world in materials science research. " }
+        "position": [0, 1.5, -5],
+        "content": { "title": "William Rice", "content": "Opened in 1912 after the murder of its namesake William Marsh Rice, Rice is a research university with an undergraduate focus. Its emphasis on education is demonstrated by a small student body and 6:1 student-faculty ratio. Rice is noted for its applied science programs in the fields of artificial heart research, structural chemical analysis, signal processing, space science, and nanotechnology. In 2010, it was ranked first in the world in materials science research. " }
+      },
+      {
+        "text": "The archway",
+        "position": [0, 2, 5],
+        "content": { "title": "The Archway", "content": "There it is...you just went through it, so you know everything I know about it." }
       }
     ]
   },
@@ -36,7 +41,14 @@
   },
   {
     "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/05_valhalla_still.mp4",
-    "loop": true
+    "loop": true,
+    "buttons": [
+      {
+        "text": "Valhalla",
+        "position": [0, 1.5, -5],
+        "content": { "title": "Valhalla", "content": "A snazzy student bar tucked away in the middle of campus.  In theory its only for graduate students. " }
+      }
+    ]
   },
   {
     "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/06_valhalla_to_union.mp4",
@@ -44,7 +56,15 @@
   },
   {
     "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/07_union_still.mp4",
-    "loop": true
+    "loop": true,
+    "buttons": [
+      {
+        "text": "The Student Union",
+        "position": [0, 1.5, -5],
+        "content": { "title": "The Student Union", "content": "A stage and many dining and shopping options for the students. " }
+      }
+    ]
+
   },
   {
     "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/08_union_to_fountain.mp4",
@@ -52,7 +72,20 @@
   },
   {
     "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/09_fountain_still.mp4",
-    "loop": true
+    "loop": true,
+    "buttons": [
+      {
+        "text": "McNair Hall",
+        "position": [5, 1.5, 0],
+        "content": { "title": "McNair Hall", "content": "Also the shell auditorium and central garage" }
+      },
+      {
+        "text": "Baker Hall",
+        "position": [-5, 1.5, 0],
+        "content": { "title": "Baker Hall", "content": "James A. Baker the third once had a hall named after him.  Take that James Baker Jr...what did you accomplish? " }
+      }
+    ]
+
   },
   {
     "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/10_fountain_to_skyview.mp4",
@@ -60,7 +93,14 @@
   },
   {
     "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/11_skyview_still.mp4",
-    "loop": true
+    "loop": true,
+    "buttons": [
+      {
+        "text": "Skyspace",
+        "position": [5, 0, 0],
+        "content": { "title": "The Skyspace", "content": "James Turrell's \"Twilight Epiphany\" Skyspace.  It was built in a sudden realization of the greatness of sparkly vampires." }
+      }
+    ]
   },
   {
     "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/12_skyview_to_stadium.mp4",
@@ -68,7 +108,15 @@
   },
   {
     "src": "https://diamhost-assets.s3.amazonaws.com/CKtemp/13_stadium_still.mp4",
-    "loop": true
+    "loop": true,
+    "buttons": [
+      {
+        "text": "The Stadium",
+        "position": [0, 1.5, -5],
+        "content": { "title": "The Stadium", "content": "This concludes the tour.  Thank you for your time.  PLease send hundreds of thousands of dollars and your firstborn child. " }
+      }
+    ]
+
   },
   {
     "src": "https://upload.wikimedia.org/wikipedia/commons/0/03/20180407_132600_Ess-Na-Crub_Waterfall.webm",
