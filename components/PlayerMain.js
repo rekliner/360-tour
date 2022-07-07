@@ -241,8 +241,6 @@ function Main ({ user }) {
               { !micMuted && <FiMic/>}
             </Button>
           )}
-        {isHost && <Button style={{marginLeft:10}} small outline contrast onClick={() => {handleSceneChange()}}>Next Scene</Button>}
-        {isHost && <Button style={{marginLeft:10}} small outline contrast onClick={() => {handleTogglePlay()}}>{isPlaying ? "Pause" : "Play" }</Button>}
           {/* {!isHost && <Button style={{marginLeft:10}} small outline contrast onClick={() => handleReaction('🙋‍♀️')}>🙋‍♀️</Button>}
           {!isHost && <Button style={{marginLeft:10}} small outline contrast onClick={() => handleReaction('👍')}>👍</Button>}
           {!isHost && <Button style={{marginLeft:10}} small outline contrast onClick={() => handleReaction('👎')}>👎</Button>} */}
