@@ -180,6 +180,7 @@ export default function Scene({sceneIndex,scenes,isPlaying, setIsPlaying, handle
 
   useEffect(() => {
     if (currentScene) {
+      //swap to the next video element, create dom element if necessary
       let nextVideo = document.getElementById('video' + sceneIndex)
       if (!nextVideo) {
         nextVideo = Object.assign(document.createElement('video'), {
@@ -188,6 +189,7 @@ export default function Scene({sceneIndex,scenes,isPlaying, setIsPlaying, handle
           crossOrigin: 'Anonymous',
           loop: currentScene.loop,
           muted: true,
+          preload: true,
           ref: vidRef,
         })
       } else {
@@ -198,6 +200,24 @@ export default function Scene({sceneIndex,scenes,isPlaying, setIsPlaying, handle
         nextVideo.addEventListener('ended', gotoNext)
       //}
       setVideo(nextVideo)
+
+      if (sceneIndex < scenes.length -2) {
+
+        let preloadVideo = document.getElementById('video' + (sceneIndex+1))
+        if (!preloadVideo) {
+          preloadVideo = Object.assign(document.createElement('video'), {
+            id: 'video' + (sceneIndex+1),
+            src: scenes[sceneIndex+1].src,
+            crossOrigin: 'Anonymous',
+            loop: scenes[sceneIndex+1].loop,
+            preload: true,
+            muted: true,
+            onLoadEnd: () => {console.log(sceneIndex+1,"preloaded")}
+          })
+        };
+        console.log("plv",preloadVideo);
+      }
+
     }
   }, [currentScene, gotoNext])
 
