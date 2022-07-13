@@ -6,7 +6,7 @@ import { Preload, OrbitControls, Text, useGLTF } from '@react-three/drei'
 import _ from 'lodash'
 import MovementController from './MovementController'
 import  {VRButton}  from './VRButton'
-import {CameraBounds} from './CameraBounds'
+import {CameraBoundsBox} from './CameraBoundsBox'
 import { TurnToCamera2d } from './TurnToCamera2d'
 //import { VRTextPanel } from './VRTextPanels'
 
@@ -151,6 +151,7 @@ export default function Scene({sceneIndex,scenes,isPlaying, setIsPlaying, handle
   const [currentScene, setCurrentScene] = useState(scenes[sceneIndex])
   const [video, setVideo] = useState(null)
   const vidRef = useRef(null)
+  const preloadVideoRef = useRef(null)
 
   const gotoNext = useCallback(() => {
     vidRef.current.removeEventListener('ended', this, false)
@@ -181,22 +182,31 @@ export default function Scene({sceneIndex,scenes,isPlaying, setIsPlaying, handle
   useEffect(() => {
     if (currentScene) {
       //swap to the next video element, create dom element if necessary
-      let nextVideo = document.getElementById('video' + sceneIndex)
-      if (!nextVideo) {
-        nextVideo = Object.assign(document.createElement('video'), {
-          id: 'video' + sceneIndex,
-          src: currentScene.src,
-          crossOrigin: 'Anonymous',
-          loop: currentScene.loop,
-          muted: true,
-          preload: true,
-          ref: vidRef,
-        })
+      let nextVideo = null;
+      if (preloadVideoRef.current) {
+        nextVideo = preloadVideoRef.current;
       } else {
-        nextVideo.ref = vidRef
+
+        nextVideo = document.getElementById('video' + sceneIndex)
+        console.log("n",nextVideo);
+        if (!nextVideo) {
+          nextVideo = Object.assign(document.createElement('video'), {
+            id: 'video' + sceneIndex,
+            src: currentScene.src,
+            crossOrigin: 'Anonymous',
+            loop: currentScene.loop,
+            muted: true,
+            preload: "auto",
+            ref: vidRef,
+          })
+        } else {
+          nextVideo.ref = vidRef
+        }
       }
+
       vidRef.current = nextVideo
-      //if (!isHost) {
+      //if (!isHost) { 
+        //question:  should the host automatically bring all viewers with them for the next video?
         nextVideo.addEventListener('ended', gotoNext)
       //}
       setVideo(nextVideo)
@@ -210,11 +220,13 @@ export default function Scene({sceneIndex,scenes,isPlaying, setIsPlaying, handle
             src: scenes[sceneIndex+1].src,
             crossOrigin: 'Anonymous',
             loop: scenes[sceneIndex+1].loop,
-            preload: true,
+            preload: "auto",
             muted: true,
+            ref: preloadVideoRef,
             onLoadEnd: () => {console.log(sceneIndex+1,"preloaded")}
           })
         };
+        preloadVideoRef.current = preloadVideo;
         console.log("plv",preloadVideo);
       }
 
@@ -239,14 +251,14 @@ export default function Scene({sceneIndex,scenes,isPlaying, setIsPlaying, handle
             />
           }
 
-        <CameraBounds lowerBound={[-.5,1.5,-.75]} upperBound={[.5,2.25,.75]} />
+        <CameraBoundsBox lowerBound={[-.5,1.5,-.75]} upperBound={[.5,2.25,.75]} />
 
         <OrbitControls target={[0,1.75,0]} minDistance={0} maxDistance={0.01} enableZoom={false} enablePan={false} enableDamping dampingFactor={0.2} autoRotate={false} rotateSpeed={-0.5} />
         <MovementController applyForward={false} />
         <MovementController hand="left" applyRotation={true} applyForward={false} />
         <DefaultXRControllers />
 
-        <Hands />
+        {/* <Hands /> */}
         </Suspense> 
 
       </VRCanvas>
