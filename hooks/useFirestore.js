@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { firebase } from '../libs/firebase'
+//import { firebase } from '../libs/firebase'
 
 import config from '../config'
 export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp

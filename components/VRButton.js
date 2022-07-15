@@ -1,7 +1,8 @@
 import { useThree, useFrame } from "@react-three/fiber";
-import { Interactive, isPresenting } from "@react-three/xr";
+import { Interactive } from "@react-three/xr";
 import { useState, useRef, Suspense } from "react";
 import { RoundedBox, Text } from "@react-three/drei";
+import { useXR } from "@react-three/xr";
 
 export const VRButton = ({
   label,
@@ -18,7 +19,9 @@ export const VRButton = ({
   follow = true,
   frameDelay = 200
 }) => {
-  const { player, camera } = useThree();
+  const { camera } = useThree();
+  const { player, isPresenting } = useXR();
+
   const cam = isPresenting ? player : camera;
   const buttonRef = useRef(null);
 

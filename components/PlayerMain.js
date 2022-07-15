@@ -98,7 +98,7 @@ function Main ({ user }) {
     }
     const latestPlayState = roomEvents.sort((a,b) => a.date < b.date).find((event) => event.eventName === 'isPlaying')?.value ?? 1;
     if (latestPlayState !== isPlaying) {
-      console.log("play diff", latestPlayState, isPlaying)
+      console.log("play diff", latestPlayState, isPlaying, )
       setIsPlaying(latestPlayState);
     }
   }, [roomEvents])
@@ -168,33 +168,39 @@ function Main ({ user }) {
   const handleSceneChange = (index = "next") => {
 
     if (index == "next") {
-      handlePeerMessage(
-        {
-          date: +new Date(), 
-          eventName: 'sceneChange', 
-          value: nextSceneIndex(sceneIndex)
-        }
-      ); 
+      if (isHost) {
+        handlePeerMessage(
+          {
+            date: +new Date(), 
+            eventName: 'sceneChange', 
+            value: nextSceneIndex(sceneIndex)
+          }
+        ); 
+      }
       setSceneIndex(nextSceneIndex(sceneIndex));
 
     } else if (index == "previous") {
-      handlePeerMessage(
-        {
-          date: +new Date(), 
-          eventName: 'sceneChange', 
-          value: previousSceneIndex(sceneIndex)
-        }
-      ); 
+      if (isHost) {
+        handlePeerMessage(
+          {
+            date: +new Date(), 
+            eventName: 'sceneChange', 
+            value: previousSceneIndex(sceneIndex)
+          }
+        ); 
+      }
       setSceneIndex(previousSceneIndex(sceneIndex));
 
     } else if (! isNaN(index)) {
-      handlePeerMessage(
-        {
-          date: +new Date(), 
-          eventName: 'sceneChange', 
-          value: nextSceneIndex(index)
-        }
-      ); 
+      if (isHost) {
+        handlePeerMessage(
+          {
+            date: +new Date(), 
+            eventName: 'sceneChange', 
+            value: nextSceneIndex(index)
+          }
+        ); 
+      }
       setSceneIndex(nextSceneIndex(sceneIndex));
 
     } else if (index == "play") {
@@ -205,13 +211,15 @@ function Main ({ user }) {
   }
 
   const handleTogglePlay = () => {
-    handlePeerMessage(
-      {
-        date: +new Date(), 
-        eventName: 'isPlaying', 
-        value: !isPlaying
-      }
-    ); 
+    if (isHost) {
+      handlePeerMessage(
+        {
+          date: +new Date(), 
+          eventName: 'isPlaying', 
+          value: !isPlaying
+        }
+      ); 
+    }
     setIsPlaying(!isPlaying)
   }
 

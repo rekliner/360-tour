@@ -6,7 +6,7 @@ import { Vector3 } from "three";
 /**
  * CameraBounds
  * Lowerbound and upperbound define a box where the camera will be moved back to if it crosses outside in any dimension
- * when combined with any physics this tends to put baby in a corner.  Next phase will be to make it a spherical bound
+ * when combined with any physics this tends to put baby in a corner.  Next phase will be to make it an ellipsoid bound
  * */
 export const CameraBoundsBox = ({ lowerBound, upperBound, debug = false }) => {
   const { camera, gl } = useThree();
@@ -56,7 +56,8 @@ export const CameraBoundsBox = ({ lowerBound, upperBound, debug = false }) => {
             (axis, index) =>
               (
                 Math.round(
-                  (cameraMode.position[axis] + headsetPos.current[axis]) * 100
+                  (cameraMode.position[axis] + transformedHeadsetPos[axis]) *
+                    100
                 ) / 100
               ).toString() +
               axis +

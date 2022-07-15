@@ -8,7 +8,7 @@ import { mapPeersData } from '../libs/peerHelper'
 import useStateRef from '../libs/useStateRef'
 import usePeer from '../hooks/usePeer'
 
-import { serverTimestamp, updateRoom } from '../hooks/useFirestore'
+//import { serverTimestamp, updateRoom } from '../hooks/useFirestore'
 
 
 export const PeerContext = createContext({
@@ -352,18 +352,18 @@ export const PeerContextProvider = ({ children, initialContext }) => {
     connToHost.send(content)
   }
 
-  useEffect(() => {
-    if (!isHost) return
-    const update = setInterval(() => {
-      updateRoom(roomId, {
-        users: (connectedPeersRef.current.length + 1), // +1 to include self
-        lastPing: serverTimestamp()
-      })
-    }, 10000)
-    return () => {
-      clearInterval(update)
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (!isHost) return
+  //   const update = setInterval(() => {
+  //     updateRoom(roomId, {
+  //       users: (connectedPeersRef.current.length + 1), // +1 to include self
+  //       lastPing: serverTimestamp()
+  //     })
+  //   }, 10000)
+  //   return () => {
+  //     clearInterval(update)
+  //   }
+  // }, [])
 
   return (
     <PeerContext.Provider value={{

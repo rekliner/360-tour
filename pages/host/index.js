@@ -5,7 +5,7 @@ import uuid from 'uuid-random'
 
 import config from '../../config'
 
-import { createRoom as dbCreateRoom, useFirestoreRooms } from '../../hooks/useFirestore'
+//import { createRoom as dbCreateRoom, useFirestoreRooms } from '../../hooks/useFirestore'
 
 import Layout from '../../components/Layout'
 import Button from '../../components/Button'
@@ -20,7 +20,7 @@ export default function Index () {
   const [createFormError, setCreateFormError] = useState(false)
   const [micAccess, setMicAccess] = useState(false)
 
-  const [rooms] = useFirestoreRooms()
+  //const [rooms] = useFirestoreRooms()
 
   function requestMicAccess() {
     navigator.mediaDevices.getUserMedia({
@@ -44,12 +44,12 @@ export default function Index () {
     .catch(() => {})
   }, [])
 
-  const exploreRooms = useMemo(() => {
-    const now = +new Date() / 1000
-    return rooms
-      .filter(room => room.lastPing)
-      .filter(room => now - room.lastPing.seconds < 30)
-  }, [rooms])
+  // const exploreRooms = useMemo(() => {
+  //   const now = +new Date() / 1000
+  //   return rooms
+  //     .filter(room => room.lastPing)
+  //     .filter(room => now - room.lastPing.seconds < 30)
+  // }, [rooms])
 
   function validForm () {
     if (userName.trim().length < 3) {
@@ -67,11 +67,11 @@ export default function Index () {
   function createRoom() {
     if (!validForm()) return
     const roomId = "roomTest"// uuid()
-    dbCreateRoom(roomId, {
-      roomId,
-      roomName,
-      userName,
-    })
+    // dbCreateRoom(roomId, {
+    //   roomId,
+    //   roomName,
+    //   userName,
+    // })
     router.push({
       pathname: '/cast/roomTest',
       as: `/cast/roomTest`,

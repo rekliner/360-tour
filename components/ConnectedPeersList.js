@@ -2,7 +2,7 @@ import { useContext, useMemo } from 'react'
 
 import { RiWhatsappLine, RiTelegramLine, RiLinksFill } from 'react-icons/ri'
 import { FiX, FiPlus } from 'react-icons/fi'
-import { WhatsappShareButton, TelegramShareButton } from 'react-share'
+//import { WhatsappShareButton, TelegramShareButton } from 'react-share'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 
