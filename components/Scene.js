@@ -116,6 +116,7 @@ export default function Scene({sceneIndex,scenes,isPlaying, setIsPlaying, handle
   
   const videoEnded = (e) => {
     if (e.path[0].sceneIndex == sceneIndexRef.current) {
+      console.log("playback ended", e);
       gotoNext();
     }
   }
@@ -136,7 +137,7 @@ export default function Scene({sceneIndex,scenes,isPlaying, setIsPlaying, handle
           sceneIndex: sceneIndex,
           src: scenes[sceneIndex].src,
           crossOrigin: 'Anonymous',
-          loop: scenes[sceneIndex+1].loop,
+          loop: scenes[sceneIndex].loop,
           muted: true,
           preload: "auto",
           ref: video,
