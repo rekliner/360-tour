@@ -1,8 +1,24 @@
-import { useThree, useFrame } from "@react-three/fiber";
-import { Interactive } from "@react-three/xr";
-import { useState, useRef, Suspense } from "react";
+import { useThree, useFrame, ThreeEvent } from "@react-three/fiber";
+import { Interactive,XRInteractionEvent } from "@react-three/xr";
+import React, { useState, useRef, Suspense, MouseEventHandler } from "react";
 import { RoundedBox, Text } from "@react-three/drei";
 import { useXR } from "@react-three/xr";
+
+type Props = {
+  onClick: (event: React.MouseEvent<HTMLButtonElement> | void) => void,
+  label: string,
+  fontColor: string,
+  fontColorHovered: string,
+  fontColorClicked: string,
+  bgColor: string,
+  bgColorHovered: string,
+  bgColorClicked: string,
+  height: number,
+  width: number,
+  position: [x: number, y: number, z: number],
+  follow: boolean,
+  frameDelay: number,
+}
 
 export const VRButton = ({
   label,
@@ -18,12 +34,12 @@ export const VRButton = ({
   position = [0, 0, 0],
   follow = true,
   frameDelay = 200
-}) => {
+}: Props) => {
   const { camera } = useThree();
   const { player, isPresenting } = useXR();
 
   const cam = isPresenting ? player : camera;
-  const buttonRef = useRef(null);
+  const buttonRef = useRef<THREE.Group>(null);
 
   const cDelta = useRef(0); //optional frame rate reduction
   useFrame((state, delta) => {
@@ -40,7 +56,7 @@ export const VRButton = ({
   });
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-  const clicked = () => {
+  const clicked = (e: XRInteractionEvent | ThreeEvent<MouseEvent>) => {
     setIsClicked(true);
     onClick();
     setTimeout(() => {
@@ -50,14 +66,14 @@ export const VRButton = ({
   return (
     <Suspense fallback={null}>
       <Interactive
-        onSelect={() => clicked()}
+        onSelect={(e: XRInteractionEvent) => clicked(e)}
         onHover={() => setIsHovered(true)}
         onBlur={() => setIsHovered(false)}
       >
         <group
           ref={buttonRef}
           position={position}
-          onClick={() => clicked()}
+          onClick={(e: ThreeEvent<MouseEvent>) => clicked(e)}
           onPointerOver={() => setIsHovered(true)}
           onPointerOut={() => setIsHovered(false)}
         >

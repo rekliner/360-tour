@@ -1,8 +1,25 @@
-import { useThree, useFrame } from "@react-three/fiber";
-import { Interactive } from "@react-three/xr";
-import { useState, useRef, Suspense } from "react";
+import { useThree, useFrame, ThreeEvent } from "@react-three/fiber";
+import { Interactive, XRInteractionEvent } from "@react-three/xr";
+import React, { useState, useRef, Suspense } from "react";
 import { Text } from "@react-three/drei";
 import { useXR } from "@react-three/xr";
+
+type Props = {
+  title: string,
+  content: string,
+  onClick: (event: React.MouseEvent<HTMLButtonElement> | void) => void,
+  fontColor: string,
+  fontColorHovered: string,
+  fontColorClicked: string,
+  bgColor: string,
+  bgColorHovered: string,
+  bgColorClicked: string,
+  height: number,
+  width: number,
+  position: [x: number, y: number, z: number],
+  follow: boolean,
+  frameDelay: number,
+}
 
 export const VRTextPanel = ({
   title,
@@ -19,11 +36,11 @@ export const VRTextPanel = ({
   position = [0, 0, 0],
   follow = true,
   frameDelay = 200
-}) => {
+}:Props) => {
   const { camera } = useThree();
   const { player, isPresenting } = useXR();
   const cam = isPresenting ? player : camera;
-  const thisRef = useRef(null);
+  const thisRef = useRef<THREE.Group>(null);
 
   const cDelta = useRef(0); //optional frame rate reduction
   useFrame((state, delta) => {
@@ -41,7 +58,7 @@ export const VRTextPanel = ({
   });
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-  const clicked = () => {
+  const clicked = (e: XRInteractionEvent | ThreeEvent<MouseEvent>) => {
     setIsClicked(true);
     onClick();
     setTimeout(() => {
@@ -51,14 +68,14 @@ export const VRTextPanel = ({
   return (
     <Suspense fallback={null}>
       <Interactive
-        onSelect={() => clicked()}
+        onSelect={(e: XRInteractionEvent) => clicked(e)}
         onHover={() => setIsHovered(true)}
         onBlur={() => setIsHovered(false)}
       >
         <group
           ref={thisRef}
           position={position}
-          onClick={() => clicked()}
+          onClick={(e: ThreeEvent<MouseEvent>) => clicked(e)}
           onPointerOver={() => setIsHovered(true)}
           onPointerOut={() => setIsHovered(false)}
         >
@@ -68,7 +85,6 @@ export const VRTextPanel = ({
           </mesh>
           <Text
             color="#FFF"
-            width={10}
             scale={[5 * (title.length / 20), 5 * (title.length / 20), 1]}
             position={[0, 7 / 2 - title.length / 20, 0.1]}
           >

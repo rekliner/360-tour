@@ -94,7 +94,7 @@ const Trolley = () => {
   const { nodes, materials } = useGLTF('/trolley.glb');
   return (
    <group ref={group} dispose={null}>
-      <group rotation={[0, Math.PI/2 , 0]} scale={[1.0,1.0,2.0]} position={[0,1.5,0]} >
+      <group rotation={[0, Math.PI/2 , 0]} scale={[1,1.0,2.5]} position={[0,1.5,0]} >
           <mesh
             geometry={nodes.defaultMaterial.geometry}
             material={materials.initialShadingGroup}
@@ -195,7 +195,7 @@ export default function Scene({sceneIndex,scenes,isPlaying, setIsPlaying, handle
             />
           }
 
-        <CameraBoundsBox lowerBound={[-.5,1.5,-.75]} upperBound={[.5,2.25,.75]} />
+        <CameraBoundsBox lowerBound={[-.5,1.5,-.75]} upperBound={[.5,2.25,.5]} />
 
         <OrbitControls target={[0,1.75,0]} minDistance={0} maxDistance={0.01} enableZoom={false} enablePan={false} enableDamping dampingFactor={0.2} autoRotate={false} rotateSpeed={-0.5} />
         <MovementController applyForward={false} key="rightHandMovement" />
